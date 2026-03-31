@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="/epic-tools/assets/js/functions.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Build Guide</title>
+    <style>
+        h1 {
+            top: 0;
+            background-color: white; /* Ensures it stands out from the background */
+            z-index: 10; /* Ensures it stays above other elements */
+            padding: 10px 40px 10px 20px;
+            margin: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        details {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        summary {
+            /* font-weight: bold; */
+            cursor: pointer;
+            position: relative;
+        }
+        details details {
+            margin-left: 20px; /* Indent nested sections */
+            background-color: #f0f0f0; /* Different background for nested sections */
+        }
+        details details details{
+            margin-left: 20px; /* Indent nested sections */
+            background-color: #f0f0f0; /* Different background for nested sections */
+        }
+        .buttons {
+            display: inline-block; /* Allow buttons to sit inline with the title */
+            vertical-align: middle; /* Align with the text */
+            margin-left: 10px; /* Small gap between title and buttons */
+        }
+        .button-icon {
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            background: none;
+            padding: 2px 5px;
+        }
+        .button-icon:hover {
+            background-color: #e0e0e0;
+        }
+        .green-tick {
+            color: green;
+        }
+        .red-cross {
+            color: red;
+        }
+        .green-background {
+            background-color: #4CAF50; /* Green similar to Good in Word */
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .pink-background {
+            background-color: #FF6F91 ; /* Pink similar to Bad in Word */
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .copy-btn {
+            border: none;
+            background: none;
+            padding: 0;
+            font: inherit; /* Ensures the font matches the surrounding text */
+            font-weight: bold;
+            color: inherit; /* Ensures the color matches the surrounding text */
+            cursor: pointer; /* Keeps the pointer cursor */
+            transition: transform 0.1s ease; /* Smooth animation */
+        }
+        .copy-btn:hover {
+            background-color: #e0e0e0;
+        }
+        .copy-btn:active {
+            transform: scale(0.95); /* Shrinks slightly to simulate a press */
+            color: #555; /* Optional: Change text color when pressed */
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 30%;
+            border: 3px solid black; /* Thicker border around the table */
+        }
+        th {
+            border: 3px solid black; /* Thicker border for headers */
+            padding: 8px;
+            text-align: left;
+        }
+        td {
+            border: 1px solid black; /* Regular border for cells */
+            padding: 8px;
+            text-align: left;
+        }
+        #title-text-input {
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #title-text-input:focus {
+            border-color: #4CAF50; /* Green border on focus */
+            outline: none; /* Removes the default focus outline */
+        }
+
+        #title-copy-button {
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            cursor: pointer;
+        }
+
+        #title-copy-button:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+        }
+        #dynamic-container {
+            display: flex; /* Align items horizontally */
+            flex-wrap: wrap; /* Wrap to the next row if necessary */
+            gap: 20px; /* Space between rows and items */
+            align-items: center; /* Align items vertically in the center */
+            padding: 10px;
+        }
+        #dynamic-container button:active {
+            transform: scale(0.98); /* Slightly shrink the button */
+            transition: transform 0.1s ease, background-color 0.2s ease; /* Smooth transitions */
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background-color: white; z-index: 10; padding: 10px;">
+        <h1>Protocol Build Guide</h1>
+        <div id="dynamic-container" style="padding: 10px;"></div>
+    </div>
+    
+
+    <details> <!-- Prep work-->
+        <summary><b>Section 1: Prep work</b></summary>
+        <!-- <details>
+            <summary>
+                Section 1.1: Subsection 1
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>This is the <button class="copy-btn" onclick="copyToClipboard('content')">content</button> of Section 1. You can add any text or formatting here.</p>
+            <button class="copy-btn" onclick="copyToClipboard('This is the content of Section 1.')">Click to Copy</button>
+            <p>Try this <a href="https://nhs.sharepoint.com/:u:/r/sites/msteams_6d051a-Team4BrillowandDiagnostics/Shared%20Documents/Team%204%20%20(Brillow%20and%20Diagnostics)/index2.html?csf=1&web=1&e=mpdqQJ" target="_blank">link</a></p>
+        </details> -->
+        <details>
+            <summary>
+                Section 1.1: Check Trial Details
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>Login into CTMS as follows and check the following:</p>
+            <p>To check CTMS, you need to be on uclh desktop and go via the formulary webpage: <button class="copy-btn" onclick="copyToClipboard('http://uclvwddprapws01/ctms/login1.asp')">http://uclvwddprapws01/ctms/login1.asp</button></p>
+            <p>User: msohomow</p>
+            <p>Password: m...244</p>
+            <p>Verify the following:</p>
+            <ul style="list-style-type: disc;">
+                <li>Trial Name</li>
+                <li>IRAS Number</li>
+                <li>Trial Title</li>
+                <li>Trial Protocol Number</li>
+                <li>Trial Protocol Version Number</li>
+                <li>Trial Protocol Version Date</li>
+            </ul>
+        </details>
+        <details>
+            <summary>
+                Section 1.2: Check meds details
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>Access Qpulse via UCLH Desktop using this link:<button class="copy-btn" onclick="copyToClipboard('\\pharmweb\QPulseClickOnceClient')">\\pharmweb\QPulseClickOnceClient</button></p>
+            <p>Install 'Q-Pulse applicaiton'</p>
+            <p>Login using:</p>
+            <ul style="list-style-type: disc;">
+                <li>Username: ehrs</li>
+                <li>Password: admin1</li>
+            </ul>
+            <p>Navigate to medbuild section and hover over the different elements for details.</p>
+        </details>
+    </details>
+
+    <details> <!-- Information Tab-->
+        <summary><b>Section 2: Information Tab</b></summary>
+        <details>
+            <summary>
+                <b>Section 2.1: PRL Record ID</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>115[builder no.][chronological number] e.g 115101000001</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.2: PRL Name</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>[COMMON NAME, CYCLE LENGTH &/- DIFFERENTIATION/PAEDS] [OP/IP/IP(AC)]: (generic name + generic name) [no. of cycles if applicable] [Paeds] - [BODY SITE/INDICATION IF SIMILAR PROTOCOL ALREADY EXISTS]“Paeds” required in name for true Paediatric protocol. Aimed for patients aged 12 and under</li>
+                <li><span style="color: green;">Trial Protocols:[TRIAL NAME] TRIAL [ARM/COHORT if applicable] OP/IP/IP(AC): (generic name + generic name) no. of cycles if applicable</span></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.3: Version Comments
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>If new version is required - add comments to audit changes</li>
+                    <p>V.[chronological no.]: brief details of change [initials & build no. & date]</p>
+                    <p>e.g. V.1: updated critical tests as per new guidelines [HAA101 05.03.19]</p>
+                    <p>e.g. V.2: Lansoprazole switched to ranitidine per formulary [JCA199 05.03.19]</p>
+            NB: major changes, e.g. addition or removal of a SACT drug may require the need to building a new protocol, as opposed to updating the current protocol.
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.4: Internet Links</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Any protocol specific links (e.g. TAF & PAF forms for Immunomodulators) if appropriate</li>
+                <li>UCLH SACT algorithms</li>
+                <li>Link to JACIE guidelines if appropriate [Transplant protocols]</li>
+                <li>SACT Renal & Hepatic Impairment Guide [Lancet, 2019]</li>
+                <li>SACT Hypersensitivity Management Guidelines [Sept 2016] [Except Oral only SACT Protocols]</li>
+            </ul>
+            <table style="width: 80%">
+                <thead>
+                    <tr>
+                        <th width="30%">Link Type</th>
+                        <th width="40%">Link</th>
+                        <th width="30%">Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><button class="copy-btn" onclick="copyToClipboard('UCLH SACT algorithms')">UCLH SACT algorithms</button></td>
+                        <td><button class="copy-btn" onclick="copyToClipboard('https://my.uclh.nhs.uk/Interact/Pages/Section/Default.aspx?Section=6161')">https://my.uclh.nhs.uk/Interact/Pages/Section/Default.aspx?Section=6161</button></td>
+                        <td>Not for CT or ATIMP Protocols</td>
+                    </tr>
+                    <tr>
+                        <td><button class="copy-btn" onclick="copyToClipboard('SACT Renal & Hepatic Impairment Guide')">SACT Renal & Hepatic Impairment Guide</button></td>
+                        <td><button class="copy-btn" onclick="copyToClipboard('https://my.uclh.nhs.uk/page/17698')">https://my.uclh.nhs.uk/page/17698</button></td>
+                        <td>All Protocols</td>
+                    </tr>
+                    <tr>
+                        <td><button class="copy-btn" onclick="copyToClipboard('SACT Hypersensitivity Management Guidelines')">SACT Hypersensitivity Management Guidelines</button></td>
+                        <td><button class="copy-btn" onclick="copyToClipboard('https://my.uclh.nhs.uk/page/17713')">https://my.uclh.nhs.uk/page/17713</button></td>
+                        <td>All except Oral SACT only protocols</td>
+                    </tr>
+                    <tr>
+                        <td><button class="copy-btn" onclick="copyToClipboard('UCLH Supportive Care Guidelines for ATMP')">UCLH Supportive Care Guidelines for ATMP</button></td>
+                        <td><button class="copy-btn" onclick="copyToClipboard('https://my.uclh.nhs.uk/Interact/Pages/Section/ContentListing.aspx?subsection=8047')">https://my.uclh.nhs.uk/Interact/Pages/Section/ContentListing.aspx?subsection=8047</button></td>
+                        <td>ATIMP Protocols ONLY</td>
+                    </tr>
+                    <tr>
+                        <td><button class="copy-btn" onclick="copyToClipboard('Lenalidomide Risk Materials')">Lenalidomide Risk Materials</button></td>
+                        <td><button class="copy-btn" onclick="copyToClipboard('https://my.uclh.nhs.uk/page/21576')">https://my.uclh.nhs.uk/page/21576</button></td>
+                        <td>Protocols containing Lenalidomide ONLY</td>
+                    </tr>
+                    <tr>
+                        <td><button class="copy-btn" onclick="copyToClipboard('Thalidomide Risk Materials')">Thalidomide Risk Materials</button></td>
+                        <td><button class="copy-btn" onclick="copyToClipboard('https://my.uclh.nhs.uk/Interact/Pages/Section/ContentListing.aspx?subsection=7991')">https://my.uclh.nhs.uk/Interact/Pages/Section/ContentListing.aspx?subsection=7991</button></td>
+                        <td>Protocols containing Thalidomide ONLY</td>
+                    </tr>
+                </tbody>
+            </table>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.5: Protocol Type</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>SACT Plan 1 [10] for all UCLH SACT protocols (not required for HCA specific protocols)</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.6: Additional Types</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>SACT Plan 2 [11] for all UCLH SACT protocols (not required for HCA specific protocols)</li>
+                <li>HCA SACT Plan 1 [1150000001] for all SACT protocols (not required for trial protocols)</li>
+                <li>HCA SACT Plan 2 [1150000002] for all SACT protocols (not required for trial protocols)</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.7: Treatment Modality [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>NOT IN USE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.8: Protocol Use Cases</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p><b>Research protocol:</b> Tick only if TRIAL</p>
+            <ul style="list-style-type: disc;">
+                <li>SOC: Ensure <i>'Clinical Only'</i> present and un-editable for NON-Trial protocols</li>
+                <li>Trial Protocols: Ensure <i>'Both Clinical & Billing'</i> present for TRIAL protocols</li>
+                <li><b>Cellular therapy protocol:</b> Tick if applicable to protocol, i.e., a transplant protocol</li>
+                <li><b>Blank Plan Template:</b> DO NOT USE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.9: Treatment Start Information
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p><b>Research protocol:</b> Tick only if TRIAL</p>
+            <ul style="list-style-type: disc;">
+                <li><b>Start cycle numbering at:</b> allocate as per protocol, usually 1</li>
+                <li><b>Start treatment day numbering at:</b> 1 (and ensure your first cycle is set at the start cycle in the orders tab)</li>
+                <li><b>Plan start date will be set to day 1:</b> DO NOT TICK - NOT CURRENTLY IN USE. RELATED TO ANCHORING</li>
+                <li><b>Can use flexible start dates?</b> Set in LSD and allows First day of treatment plan to be set once the first appt is booked. Can leave BLANK</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.10: Related Views [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>Timeline view: </b>NOT IN USE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.11: Prior Authorization [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>Always create referral? </b>NOT IN USE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.12: Due Time [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>Automatically launch Adjust Due Times </b>NOT IN USE - Decided it's useless for UCLH nurses</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.13: Repeating Cycles [NOT IN USE currently]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>Allow plans from this protocol to use repeating cycles? </b>NOT IN USE</li>
+                <li><b>Number of planned cycles before extending a plan automatically: </b>NOT IN USE</li>
+                <li><b>Number of cycles to automatically add to a plan: </b>NOT IN USE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.14: Cost [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>Estimated cost: </b>NOT IN USE</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.15: Synonyms</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Commonly known short names for SACT Drugs</li>
+                <li>Commonly known short names for protocol</li>
+                <li>Builder initials & no. (e.g. <button class="copy-btn" onclick="copyToClipboard('MZS135')">MZS135</button>)</li>
+                <li><b>Trial Type, e.g., CCTU, CRF</b>Trial Type, e.g., CCTU, CRF</li>
+                <li><b>Emetogenicity</b></li>
+                <li>Other appropriate synonyms</li>
+                <li>NB. Words/drug names in the Protocol name do not require synonyms.</li>
+                <li><span style="color: green;"><button class="copy-btn" onclick="copyToClipboard('IRAS ')">IRAS </button>number for clinical trials</span></li>
+                <li><span style="color: green;"><button class="copy-btn" onclick="copyToClipboard('RESEARCH')">RESEARCH</button> for clinical trials</span></li>
+                <li><span style="color: blue;">Transplants</span></li>
+                <ul style="list-style-type: circle;">
+                    <li><button class="copy-btn" onclick="copyToClipboard('FLUDARABINE')">FLUDARABINE</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('BMT')">BMT</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('AUTO TRANSPLANT')">AUTO TRANSPLANT</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('FILGRASTIM')">FILGRASTIM</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('BONE MARROW TRANSPLANT')">BONE MARROW TRANSPLANT</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('STEM-CELLS')">STEM-CELLS</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('AUTOLOGUS')">AUTOLOGUS</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('CAR-T')">CAR-T</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('CYCLOPHOSPHAMIDE')">CYCLOPHOSPHAMIDE</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('ATMP')">ATMP</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('ATMPS')">ATMPS</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('ALLOGENEIC')">ALLOGENEIC</button></li>
+                    <li><button class="copy-btn" onclick="copyToClipboard('CAMPATH')">CAMPATH</button></li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.16: Suggestion Advisories [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>NOT IN USE</b>></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.17: Tags</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>UCLH Protocols</b></li>
+                <ul style="list-style-type: circle;">
+                    <li>Report Inclusion [<button class="copy-btn" onclick="copyToClipboard('115120001')">115120001</button>]</li>
+                    <li>Protocol associated diagnoses</li>
+                    <li>Paediatric [<button class="copy-btn" onclick="copyToClipboard('10017')">10017</button>] (if aimed for patients aged 12 and under)</li>
+                    <li><b><span style="color: green;">Non Dose Banded Trial [<button class="copy-btn" onclick="copyToClipboard('115199010')">115199010</button>] For Protocols using non dose banded pharmacy stock IMP</span></b></li>
+                    <li>Clinic Administered Meds for Clotting [<button class="copy-btn" onclick="copyToClipboard('115199011')">115199011</button>] - For use in clotting protocols that are to be administered in clinic (ensures medications appear in the ‘Active treatment plans for clotting patient having clinic administered meds’ report)</li>
+                    <li>Blood and Marrow Transplant [<button class="copy-btn" onclick="copyToClipboard('10001')">10001</button>] - For use in Allogeneic/Autologous/ATIMP protocols</li>
+                </ul>
+                <li><b>HCA Protocols</b></li>
+                <ul style="list-style-type: circle;">
+                    <li>HCA Healthcare UK [<button class="copy-btn" onclick="copyToClipboard('20000')">20000</button>]</li>
+                    <li>Protocol associated diagnoses</li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 2.18: Abbreviation [NOT IN USE]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>NOT IN USE</b></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.19: Description [MAX 2 years worth of cycles to build]</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>[Cycle & no. if required for differentiation]</p>
+            <p>[generic name drug #1, dose, route, freq & schedule] - Keep it short, e.g., say IV instead of IV Infusion</p>
+            <p>[generic name drug #2, dose, route, freq & schedule] - Keep it short, e.g., say IV instead of IV Infusion</p>
+            <p>Cycles: [cycle length & no. of cycles if appropriate]</p>
+            <p style="color: red;">Ex: Capecitabine 1000mg/m2 PO BD, days 1 to 14</p>
+            <p style="color: red;">Ex: Fludarabine 20mg/m2 IV, Day 1</p>
+            <p style="color: red;">Ex: Cycle length: 21 days for 5 cycles</p>
+            <p style="color: red;">Ex: Cycle length: 21 days until disease progression or unacceptable toxicity</p>
+        </details>
+
+        <details>
+            <summary>
+                <b>Section 2.20: Notes</b>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p><b>Ensure that all the communication orders that are being added to the protocol are somehow included in the notes section, just in case people remove the OSQs and we want to know what was originally in the PRL</b></p>
+            <p><b>Template</b></p>
+            <p style="line-height: 1;">
+                PROTOCOL DESCRIPTION:<br>
+                Trial Name - Need to have entire blurb of the research even if we need to go dig it out from somewhere else<br>
+                Regime details (see below for formatting details)<br>
+                TRIAL PROTOCOL:<br>
+                IRAS number:<br>
+                Protocol number: (if available)<br>
+                Protocol Version: xxx (protocol version date)<br>
+                --------------------<br>
+                EMETOGENIC RISK:<br>
+                ALLERGIC REACTIONS:<br>
+                ADMINISTRATION INSTRUCTIONS:<br>
+                MONITORING:<br>
+                OTHER:<br>
+                --------------------<br>
+                CRITICAL TESTS:<br>
+            </p>                
+            <b>Regime Details Formatting</b>
+            <ul style="list-style-type: disc;">
+                <li>Cycle (if different drugs per cycle)</li>
+                <li>Format for each drug: Name dose route <b>in</b> dilution <b>over</b> dose duration freq Day day#</li>
+                <li><b>Cycle Length:</b> length of cycle</li>
+            </ul>
+        </details>
+    </details>
+
+    <details> <!-- Dosing tab-->
+        <summary><b>Section 3: Dosing Tab</b></summary>
+        <p>Please refer to the below table and checklists to setup the dosing tab</p>
+        <p><img src="/epic-tools/assets/img/dose_tick_boxes.png" alt="The most common setup for the dosing tab" width="1200"></p>
+        <p><img src="/epic-tools/assets/img/compatibility_options.png" alt="Compatibility Warnings to be disabled" width="1200"></p>
+        <p><img src="/epic-tools/assets/img/dose_table.png" alt="All relevant settings for the Dosing tab, including LSD settings" width="1200"></p>
+    </details>
+
+    <details> <!-- OSQ-->
+        <summary><b>Section 4: OSQs</b></summary>
+        <details> <!-- Day order mode-->
+            <summary>
+                Section 4.1: Day Order Mode (each day of cycle) - Ensure IP or OP is selected appropriately
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+
+        <details> <!-- Correct number of cycles/Days-->
+            <summary>
+                Section 4.2: Create the correct number of Cycles and Days
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+
+        <details> <!--OPCS Codes-->
+            <summary>
+                Section 4.3: OPCS-4 Codes [Default Category: <b>Clinical Coding</b>] [Order Mode: <b>Outpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Only need Delivery Codes now. Can be found in file UCLH <a href="https://nhs.sharepoint.com/:x:/r/sites/msteams_6d051a/_layouts/15/Doc.aspx?sourcedoc=%7BFB01BD55-74E9-4F00-BEB4-70710E63B06C%7D&file=UCLH%20Chemotherapy%20Spreadsheet%2017-19%20-%20EPIC%20Translation%20(HA%2012.07.18).xlsx&action=default&mobileredirect=true" target="_blank">Chemotherapy Spreadsheet 17-19 spreadsheet</a>
+                <li>
+                    If the specific combination of SACT drugs Treatment Plan does <strong>NOT</strong> exist (this means the exact combination, no approximation), use the unlisted code: <button class="copy-btn" onclick="copyToClipboard('OPCS-4 X72.9')">OPCS-4 X72.9</button></li>
+                    <ul style="list-style-type: circle;">
+                        <li>
+                            <strong>Macmillan Cancer Centre (MCC) Daycare (2DC; 3DC & 4th Floor) Protocols (DAYCASE = OP)</strong>
+                            <ul style="list-style-type: square;">
+                                <li>Day 1 of EVERY cycle: Delivery Codes</li>
+                                <li>Day 2+ of EVERY cycle: <button class="copy-btn" onclick="copyToClipboard('OPCS-4 X72.4')">OPCS-4 X72.4</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Inpatient Protocols (INPATIENT = IP/OP(AC))</strong>
+                            <ul style="list-style-type: square;">
+                                <li>Day 1 of EVERY cycle: no coding required</li>
+                                <li>Day 2+ of EVERY cycle: no coding required</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Ambulatory Care Unit (2AC & TYA-AC) Protocols (INPATIENT = IP/OP(AC) / DAYCASE = OP)</strong>
+                            <ul style="list-style-type: square;">
+                                <li>
+                                    Check the <a href="#">AC Length of Treatment (Revised – July 2019.xls</a>) spreadsheet to ascertain if the protocol is an Inpatient or Daycase protocol.
+                                </li>
+                                <li>For <strong>Daycase</strong> protocols follow MCC Daycare Protocols code rules</li>
+                                <li>For inpatient protocols follow Inpatient Protocols code rules</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Oral only SACT Protocols (OUTPATIENT = OP)</strong>
+                            <ul style="list-style-type: square;">
+                                <li>Day 1 of EVERY cycle: Delivery Codes</li>
+                                <li>Day 2+ of EVERY cycle: <button class="copy-btn" onclick="copyToClipboard('OPCS-4 X72.4')">OPCS-4 X72.4</button></li>
+                                <li>NB: Oral only SACT protocols unlikely to have Day 2+ within protocol build.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong style="color: green;">CCTU Trial Protocols</strong>
+                    <ul style="list-style-type: disc;">
+                        <li>OP: Yes (follow MCC Daycare Protocols rules) – when there are SoC Pharmacy Stock elements to the trial. Otherwise (i.e., for Trial Stock) <strong>No</strong>.</li>
+                        <li>IP: Yes (follow Inpatient Protocols rules) – when there are SoC Pharmacy Stock elements to the trial. Otherwise <strong>No</strong>.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong style="color: green;">CRF Trial Protocols</strong>
+                    <ul style="list-style-type: disc;">
+                        <li>OP: Yes (follow MCC Daycare Protocols rules) – when there are SoC Pharmacy Stock elements to the trial. Otherwise <strong>No</strong>.</li>
+                        <li>IP: Yes (follow Inpatient Protocols rules) – when there are SoC Pharmacy Stock elements to the trial. Otherwise <strong>No</strong>.</li>
+                    </ul>
+                </li>
+                <li>
+                    Code for Unlisted Protocols
+                    <ul style="list-style-type: square;">
+                        <li>Delivery Code: <button class="copy-btn" onclick="copyToClipboard('OPCS-4 X72.9')">OPCS-4 X72.9</button></li>
+                    </ul>
+                </li>
+            </ul> 
+        </details>
+
+        <details> <!--Infusion/Admission Appt req-->
+            <summary>
+                Section 4.4 Infusion Appointment/Admit Order [Default Category: <b>Appointment Request</b>] [Order Mode: <b>Outpatient</b>]
+                <span style="font-weight: bold; color: red; background-color: yellow;">[ONLY IF CONTAINS NON-ORAL DRUGS]</span>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <details>
+                    <summary>
+                        <strong><a href="https://nhs.sharepoint.com/:x:/r/sites/msteams_6d051a/Deliverable%20Documentation/BAU,%20Bugs/SOPs/Brillow%20SOPs/Beacon%20Protocol%20Build/Protocol%20Build%20Reference%20Files/Standardised%20OSQs.xlsx?d=w9c93094c94c640748edeb29cf4da5e90&csf=1&web=1&e=Fw8GzG" target="_blank">Standardised OSQs List</a></strong>
+                    </summary>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="70%">Cycle 1 Day 1 Appts</th>
+                                <th width="30%">OSQ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0-mins offset</td>
+                                <td>Row 1, Column 2</td>
+                            </tr>
+                            <tr>
+                                <td>15-mins offset</td>
+                                <td>Row 2, Column 2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="70%">NOT Cycle 1 Day 1 Appts</th>
+                                <th width="30%">OSQ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0-mins offset</td>
+                                <td>Row 1, Column 2</td>
+                            </tr>
+                            <tr>
+                                <td>15-mins offset</td>
+                                <td>Row 2, Column 2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </details>
+                <li>
+                    <strong>Macmillan Cancer Centre (MCC) Daycase (2nd Floor & TYA) Protocols [IV OP only]</strong>
+                    <ul style="list-style-type: square;">
+                        <li>Need to find the correct appointment orders/OSQs that will fulfil the requirements for infusional drugs.
+                            Need to have a look at Infusion Duration Table for either individual drugs or combination of drugs to figure out what the default appointment lengths will be if no buffers are included.
+                            If it satisfies the criteria, you can use EAPs that have no buffers.
+                            If not, then you need to calculate the buffer required and choose the correct EAP to ensure that the appointment length is enough to ensure that all the drugs can be given.</li>
+                        <li><strong>Treatment Initiation Cycle</strong></li>
+                        <ul style="list-style-type: square;">
+                            <li>If the cycle in the protocol is a treatment initiation cycle it is important to create an independent first cycle. It contains the OSQ, which holds the EAP, that links the treatment plan to the cancer waiting list to indicate its initiation & fulfil an element of our reporting requirements. The remainder of the cycles can be grouped as per protocol build requirements, with treatment continuation cycle appointment/admit OSQs.</li>
+                            <li>Examples: </li>
+                            <p>"MCC#1 DAYCARE INFUSION APPOINTMENT (CYCLE 1 DAY 1 ONLY) (NO BUFFER) +7/-2 DAY SCH TOL." OSQ: <button class="copy-btn" onclick="copyToClipboard('115000014')">115000014</button></p>
+                            <p>“MCC DAYCARE INFUSION APPOINTMENT (OTHER TREATMENT DAY (NOT CYCLE 1 DAY 1)) (NO BUFFER) +/-1 DAY SCH TOL." OSQ: <button class="copy-btn" onclick="copyToClipboard('115000003')">115000003</button></p>
+                        </ul>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Ambulatory Care Unit (2AC & TYA-AC) & Inpatient Protocols [IP & IP(AC)]</strong>
+                    <ul style="list-style-type: square;">
+                        <li>Add the “<strong>ADMISSION REQUEST CYCLE #1</strong>”; OSQ: <button class="copy-btn" onclick="copyToClipboard('115000062')">115000062</button> for treatment initiation cycle</li>
+                        <li>Add the “<strong>ADMISSION REQUEST CYCLE #2+</strong>”; OSQ: <button class="copy-btn" onclick="copyToClipboard('115000063')">115000063</button> for treatment continuation cycle(s)</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>CCTU</strong>
+                    <ul style="list-style-type: disc;">
+                        <li>OP: Yes if protocol has IV drugs</li>
+                        <li>Cycle 1 Day 1: <button class="copy-btn" onclick="copyToClipboard('115000101')">115000101</button></li>
+                        <li>Other Treatment Days: <button class="copy-btn" onclick="copyToClipboard('115000102')">115000102</button></li>
+                        <li>IP: Yes – admit orders
+                            <ul style="list-style-type: square;">
+                                <li>Add the “<strong>ADMISSION REQUEST CYCLE #1</strong>”; OSQ: <button class="copy-btn" onclick="copyToClipboard('115000062')">115000062</button> for treatment initiation cycle</li>
+                                <li>Add the “<strong>ADMISSION REQUEST CYCLE #2+</strong>”; OSQ: <button class="copy-btn" onclick="copyToClipboard('115000063')">115000063</button> for treatment continuation cycle(s)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>CRF</strong>
+                    <ul style="list-style-type: disc;">
+                        <li>OP: Yes if protocol has IV drugs</li>
+                        <li>Cycle 1 Day 1: <button class="copy-btn" onclick="copyToClipboard('115000097')">115000097</button></li>
+                        <li>Other Treatment Days: <button class="copy-btn" onclick="copyToClipboard('115000098')">115000098</button></li>
+                        <li>NB: oral only protocols may need a CRF appointment due to monitoring and administration needs – requirements will be protocol specific.</li>
+                    </ul>
+                </li>
+            </ul>
+        </details>
+        
+        <details>
+            <summary>
+                Section 4.5: Outpatients Bloods [Order Category: <b>Blood Tests</b>] </b>[Order Mode: <b>Outpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Naming Convention: <b>BLOODS OP: {Test1, Test2, ... & Testn} (FUTURE)</b></li>
+                <li>Future, Lab Collect, Clinical Details: Pre-SACT Bloods</li>
+                <li>AMYLASE - <button class="copy-btn" onclick="copyToClipboard('115800000016')">115800000016</li>
+                <li>AST - <button class="copy-btn" onclick="copyToClipboard('115800000014')">115800000014</li>
+                <li>BONE PROFILE - <button class="copy-btn" onclick="copyToClipboard('115800000002')">115800000002</li>
+                <li>Ciclosporin levels - <button class="copy-btn" onclick="copyToClipboard('115800000013')">115800000013</li>
+                <li>CMV PCR - <button class="copy-btn" onclick="copyToClipboard('115800000010')">115800000010</li>
+                <li>Cortisol - <button class="copy-btn" onclick="copyToClipboard('115800000004')">115800000004</li>
+                <li>Creatine Kinase - <button class="copy-btn" onclick="copyToClipboard('115800000019')">115800000019</li>
+                <li>DAT - <button class="copy-btn" onclick="copyToClipboard('115800000021')">115800000021</li>
+                <li>FBC & Diff - <button class="copy-btn" onclick="copyToClipboard('115800000000')">115800000000</li>
+                <li>GGT - <button class="copy-btn" onclick="copyToClipboard('115800000017')">115800000017</li>
+                <li>HBA1C - <button class="copy-btn" onclick="copyToClipboard('115800000023')">115800000023</li>
+                <li>Hepatitis B & HBA1C - <button class="copy-btn" onclick="copyToClipboard('115800000025')">115800000025</li>
+                <li>Hepatitis B full screen - <button class="copy-btn" onclick="copyToClipboard('115800000024')">115800000024</li>
+                <li>IBGRL genotype - <button class="copy-btn" onclick="copyToClipboard('115800000022')">115800000022</li>
+                <li>Immunotherapy panel - <button class="copy-btn" onclick="copyToClipboard('115800000026')">115800000026</li>
+                <li>INR - <button class="copy-btn" onclick="copyToClipboard('115800000028')">115800000028</li>
+                <li>Lactate dehydrogenase - <button class="copy-btn" onclick="copyToClipboard('115800000012')">115800000012</li>
+                <li>Lipase - <button class="copy-btn" onclick="copyToClipboard('115800000018')">115800000018</li>
+                <li>Lipid profile - <button class="copy-btn" onclick="copyToClipboard('115800000020')">115800000020</li>
+                <li>Magnesium - <button class="copy-btn" onclick="copyToClipboard('115800000006')">115800000006</li>
+                <li>Pre CD38 antibody panel - <button class="copy-btn" onclick="copyToClipboard('115800000027')">115800000027</li>
+                <li>Serum Glucose - <button class="copy-btn" onclick="copyToClipboard('115800000005')">115800000005</li>
+                <li>T3 - <button class="copy-btn" onclick="copyToClipboard('115800000008')">115800000008</li>
+                <li>T4 - <button class="copy-btn" onclick="copyToClipboard('115800000007')">115800000007</li>
+                <li>Thiamine - <button class="copy-btn" onclick="copyToClipboard('115800000015')">115800000015</li>
+                <li>TSH - <button class="copy-btn" onclick="copyToClipboard('115800000003')">115800000003</li>
+                <li>U&E+LFTs - <button class="copy-btn" onclick="copyToClipboard('115800000001')">115800000001</li>
+                <li>Urea - <button class="copy-btn" onclick="copyToClipboard('115800000011')">115800000011</li>
+                <li>Uric acid - <button class="copy-btn" onclick="copyToClipboard('115800000009')">115800000009</li>
+                <!-- <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+                <li>Lipase <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li> -->
+            </ul>
+        </details>
+        
+        <details>
+            <summary>
+                Section 4.6: Prescribing Communication [Default Category: <b>Prescribing Advice & Guidelines</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Naming convention for OSQ: <b>P.COMM XXX [try and stick it as close to the relevant medication as possible in the PRL]</b></li>
+                <li>EAPs</li>
+                <ul style="list-style-type: square;">
+                    <li>BCNC02</li>
+                    <li>BCNC13</li>
+                    <li>BCNC20</li>
+                    <li>BCNC30</li>
+                </ul>
+                <li><b>Commonly used P.COMM in certain scenarios</b></li>
+                <ul style="list-style-type: square;">
+                    <li style="margin-bottom: 15px;">
+                        P.COMM: RED-CELL PHENOTYPING PRIOR TO CD38 ANTIBODY (BCNC02) - BASIC 
+                        [<button class="copy-btn" onclick="copyToClipboard('115101000644')">115101000644</button>]
+                        <div style="margin-top: 4px; margin-left: 1em; color: #555; font-size: 0.9em;">
+                        For protocols containing Daratumumab, Isatuximab, other CD38 targetting MAB insert into C1D1
+                        </div>
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        P.COMM SACT IP: IMID TIF/PAF & VTE RISK ASSESSMENT (BCNC02) - BASIC 
+                        [<button class="copy-btn" onclick="copyToClipboard('115101000819')">115101000819</button>]
+                        <div style="margin-top: 4px; margin-left: 1em; color: #555; font-size: 0.9em;">
+                        For protocols containing Lenalidomide, Thalidomide,... insert into all D1
+                        </div>
+                    </li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.7: Decision Points
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>This is the order used by the consultant to document decisions being made that will generally affect the structure of the protocol, e.g., reduce the number of cycles or days</li>
+                <li>Add a prescribing communication order with comments instructing the prescriber of what decision needs to be made.</li>
+                <li>Add LQLs to the OSQ that the prescriber will answer to indicate what decision was made.</li>
+                <LI>NAMING CONVENTION: DECISION POINT: [a descriptive title for later use] (BCNC[##]) - BASIC</LI>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.8: Pre-SACT Clinical Review [Default Category: <b>Safety Parameters and Special Instructions</b>] [Order Mode: <b>Outpatient</b>] [OSQ: <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</button>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>This is the order used by the consultant to communicate that they are happy to proceed with this cycle of chemo. As a rule of thumb (but not always) this is usually only added to Day 1 of a cycle</li>
+                <li>Add: “Pre-SACT Clinical Review” OSQ <button class="copy-btn" onclick="copyToClipboard('115000001')">115000001</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.9: Nurse SACT Go-Ahead [Default Category: <b>Safety Parameters and Special Instructions</b>] [Order Mode: <b>Outpatient</b>] 
+                <span style="font-weight: bold; color: red; background-color: yellow;">[ONLY IF CONTAINS Nurse-administered DRUGS]</span>
+                [OSQ: NO DEFAULT <button class="copy-btn" onclick="copyToClipboard('115000038')">115000038</button>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>The sole purpose of this order is to communicate to the nurses that they need to check something before they can go ahead with chemo.
+                    For instance, let's say the pharmacist was reviewing the prescription the previous day and there were some missing blood results or it's a later Day (e.g., 2, 8, etc…)
+                    and we need to check the results just before administering the drug but hasn’t required the pharmacist to review every single day of the cycle, i.e., pharmacist reviewed Day 1,
+                    everything was ok to proceed but we need to keep an eye on specific results before each day of treatment.
+                </li>
+                <li>There are 2 scenarios where this is relevant and depending on the scenario, we need to choose between 2 types of OSQs: DEFAULTED or NOT DEFAULTED.
+                    DEFAULTED is used when we want the nurses to do the check by design, e.g., for the later days.
+                    NOT DEFAULTED is used for the sole convenience of the reviewing pharmacist to give them an easy way of adding this OSQ if they for some reason,
+                    e.g., some results are taking too long to come back, require the nurse to do a final check before administering the chemo.
+                </li>
+                <li><b>OSQs</b></li>
+                <ul style="list-style-type: circle;">
+                    <li>For any protocol that has no classification: “NURSE GO-AHEAD - SELECT ALL NO DEFAULT” OSQ <button class="copy-btn" onclick="copyToClipboard('115000038')">115000038</li>
+                    <li>For any protocol that is pre-classified as nurse release, at the protocol build level: “NURSE GO-AHEAD - SELECT ALL DEFAULTED” OSQ <button class="copy-btn" onclick="copyToClipboard('115000039')">115000039</li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.10: Critical Tests [Default Category: <b>Safety Parameters and Special Instructions</b>] [Order Mode: <b>Outpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>They should be placed in days within the protocol where specific parameters are required to be monitored.</li>
+                <li>While there are some OSQs in the Standardised OSQs spreadsheet, in this case it's easier to find them by looking for order groups. Chances are you'll have to make one, especially for trials. There are so many different combinations.</li>
+                <li>OSQ Naming Convention: <b>CRITICAL TESTS: (X-DAY) [VARIABLE1][PARAMETER1], [VARIABLE2][PARAMETER2], …</b></li>
+                <li><b>EAPs</b></li>
+                <ul style="list-style-type: square;">
+                    <li>BCNC16</li>
+                    <li>BCNC17</li>
+                    <li>BCNC18</li>
+                    <li>BCNC19</li>
+                    <li>BCNC23</li>
+                    <li>BCNC24</li>
+                    <li>BCNC25</li>
+                    <li>BCNC26</li>
+                    <li>nur120B</li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.11: Administration Communication [Default Category: <b>Administration Communication</b>] [Order Mode: <b>Inpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Use this EAP if there are specific instructions that are required to be communicated to the nurse administering the drug. Place strategically before the OSQ containing the drug in question.</li>
+                <li>Naming Convention for OSQ: <b>A.COMM: xxxxxxx</b></li>
+                <li>Chances are you'll have to make one unless you're mostly duplicating an existing PRL</li>
+                <li><b>EAPs</b></li>
+                <ul style="list-style-type: square;">
+                    <li>BCNC03</li>
+                    <li>BCNC11</li>
+                    <li>BCNC12</li>
+                    <li>BCNC14</li>
+                    <li>BCNC27</li>
+                    <li>BCNC28</li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.12: Pre-Hydration [Default Category: <b>Pre-Hydration</b>] [Order Mode: <b>Inpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>if there is a pre-medication that is supplied to the patient an outpatient prescription to self-administer before their treatment,
+                then this should be built as an outpatient, as take home medication & an administration communication order added to prompt the nurse to check the patient has taken their dose.
+            </p>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.13: Pre-Medication [Default Category: <b>Pre-Medication</b>] [Order Mode: <b>Inpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>OSQs containing standard pre-meds can be found in the <strong><a href="https://nhs.sharepoint.com/:x:/r/sites/msteams_6d051a/Deliverable%20Documentation/BAU,%20Bugs/SOPs/Brillow%20SOPs/Beacon%20Protocol%20Build/Protocol%20Build%20Reference%20Files/Standardised%20OSQs.xlsx?d=w9c93094c94c640748edeb29cf4da5e90&csf=1&web=1&e=Fw8GzG" target="_blank">Standardised OSQs List</a></strong></p>
+            OSQ Naming convention:
+            <ul>
+                <li>&lt;Drug Type&gt; Pre-Med IP/OP: &lt;Drug, dose, route, frequency&gt;</li>
+                <li>Ex: Anti-Emetic Pre-Med IP: Ondansetron 8mg IV BD</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.14: SACT [Default Category: <b>Systemic Anti-Cancer Therapy</b>] [Order Mode: As per protocol]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p><img src="/epic-tools/assets/img/IMP_naming_convention.png   " alt="Flowchart for IMP naming convention" width="1200"></p>
+            <ul style="list-style-type: disc;">
+                <p>*For Pharmacy stock IMP Rituximab use: RITUXIMAB (TRUXIMA) ORDERABLE (ONCOLOGY INDICATIONS) - CTP STOCK [<button class="copy-btn" onclick="copyToClipboard('409109012')">409109012</button>]</p>
+                <li>Default Category for OP SACT TTAs where the patient will be taking the SACT with them and self administer at home use: <b>TTA SYSTEMIC ANTI-CANCER THERAPY</b></li>
+                <li> If the protocol contains a mix of IV chemo and TTA SACT, then put the IV SACT first as IP mode orders followed by everything immediately required
+                    post the SACT, e.g., hydration ,etc..., then put in the TTA SACT OSQ
+                </li>
+                <li><b>Naming prefix and explanation for SACT OSQs</b></li>
+                <ul style="list-style-type: circle;">
+                    <li><b>Standard of Care - </b>This is for non-trial protocols</li>
+                    <ul style="list-style-type: square;">
+                        <li>Use standard of care ERX</li>
+                        <li>OSQ name should begin with <b>SACT</b></li>
+                        <li>OSQ naming prefixes</li>
+                        <ul>
+                            <li><b>SACT IP</b></li>
+                            <li><b>SACT IP(AC)</b></li>
+                            <li><b>SACT TTA</b></li>
+                            <li><b>PO SACT TTA</b></li>
+                        </ul>
+                    </ul>
+                    <li><b>Pharmacy Stock IMPs -  </b>This is when the hospital will be using standard of care stock and be reimbursed by the sponsor of the trial.</li>
+                    <ul style="list-style-type: square;">
+                        <li>Use standard of care ERX</li>
+                        <li>OSQ name should begin with <b>SACT PH-IMP</b></li>
+                        <li>State 'IMP PHARMACY STOCK' in the 'Notes to Pharmacy' section</li>
+                        <li>Select Phase of care Pharmacy Stock IMP - CTP/CCTU or CRF</li>
+                        <li>OSQ naming prefixes</li>
+                        <ul>
+                            <li><b>SACT PH-IMP IP</b></li>
+                            <li><b>SACT PH-IMP IP(AC)</b></li>
+                            <li><b>SACT PH-IMP TTA</b></li>
+                            <li><b>PO SACT PH-IMP TTA</b></li>
+                        </ul>
+                    </ul>
+                    <li><b>Trial Stock IMPs - </b>This is when the trial sponsor will supply the stock.</li>
+                    <ul style="list-style-type: square;">
+                        <li>Use clinical trial ERX</li>
+                        <li>OSQ name should begin with <b>SACT CT-IMP</b></li>
+                        <li>OSQ naming prefixes</li>
+                        <ul>
+                            <li><b>SACT CT-IMP IP</b></li>
+                            <li><b>SACT CT-IMP IP(AC)</b></li>
+                            <li><b>SACT CT-IMP TTA</b></li>
+                            <li><b>PO SACT CT-IMP TTA</b></li>
+                        </ul>
+                    </ul>
+                    <li><b>Non-dose banded Pharmacy Stock IMPs</b></li>
+                    <p>All pharmacy stock IMPs have dose banding configured within the ERX. This is not suitable for some paediatrics and adolescent trial protocols. The requesting paediatric pharmacist will indicate this in the request form. Refer to the build guide for more information.</p>
+                    <p>Traditionally, chemotherapy doses were calculated based on patients' height and weight. This led to waste, as pharmacies would have to throw away any medication that was left over from vials containing fixed doses.</p>
+                    <p>To address this issue, several hospitals have adopted a system called dose banding. With dose banding, a range of doses is delivered to closely match the vial size. This reduces waste and shortens patients' wait times, as the doses are often ready-made.</p>
+                    <p>All pharmacy stock SACT ERX (apart from a few exceptions) have dose banding configured within the ERX. This is not suitable for some paediatrics and adolescent trial protocols. The requesting paediatric pharmacist will indicate this in the request form.</p>
+                    <p>
+                        From a build perspective, the dose banding is applied in the Orderable of the SOC ERX. So what we don't want is to use that ERX as it will default to the dose banding.
+                        However, since it is a pharmacy stock imp, we do need to dispense the SOC ERX. So, to make it work what we do is we have built out a couple of lines in the CT ERX Orderable that return true when the Non Dose-Banded tag is applied and it then points to the mixture ERX directly without any banding applied.
+                    </p>
+                    <p>When this situation occurs the following will be required:</p>
+                    <ul style="list-style-type: square;">
+                        <li>Use clinical trial ERX</li>
+                        <li>Add the protocol tag “Non-Dose Banded Trial” [<button class="copy-btn" onclick="copyToClipboard('115199010')">115199010]</li>
+                        <li>OSQ name should begin with <b>SACT CT(PH)-IMP</b></li>
+                        <li>OSQ naming prefixes</li>
+                        <ul>
+                            <li><b>SACT CT(PH)-IMP IP</b></li>
+                            <li><b>SACT CT(PH)-IMP IP(AC)</b></li>
+                            <li><b>SACT CT(PH)-IMP TTA</b></li>
+                            <li><b>PO SACT CT(PH)-IMP TTA</b></li>
+                        </ul>
+                    </ul>
+                    <li><b>IXRS/IVRS (NOW DEFUNCT)</b></li>
+                    <p>IXRS is a system whereby a pharmacist will login, put in the patient details and the system will tell the pharmacist exact which vial to use based on the batch number.</p>
+                    <p>If a CT IMP requires IXRS, then <b>add 'Refer to IXRS' to Notes to pharmacy in the OSQ and add 'IXRS' as a suffix to the OSQ name</b></p>
+                </ul>
+                <li><b>Full naming convention:</b></li>
+                <p style="color:blue;" >
+                    <b>
+                        [Epic Order Category/nature of order][TTA/IP]: [Full generic name of medications or procedures and their dose & 
+                    forms/route], ([Schedule &/or Duration]) ([Offset] if applicable) – [Selection Mode]
+                    </b>
+                </p>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.15: Concurrent Hydration [Default Category: <b>Concurrent Hydration</b>] [Order Mode: <b>Inpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.16: Post-Medication [Default Category: <b>Post-Medications</b>] [Order Mode: <b>Inpatient</b> (Outpatient if the patient will take home and self-administer)]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <p>
+                If there is a post-medication that is supplied to the patient an outpatient prescription to self-administer after their treatment – then this should be built as an 
+                outpatient, as take home medication & if appropriate, an administration communication order input to prompt the nurse to check the patient know how to take their dose.
+            </p>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.17: Post Hydration [Default Category: <b>Post-Hydration</b>] [Order Mode: <b>Inpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.18: Administration Communication [Default Category: <b>Administration Communication</b>] [Order Mode: <b>Inpatient</b>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Use this EAP if there are specific instructions that are required to be communicated to the nurse administering the drug. Place strategically before the OSQ containing the drug in question.</li>
+                <li>Naming Convention for OSQ: <b>A.COMM: xxxxxxx</b></li>
+                <li>Chances are you'll have to make one unless you're mostly duplicating an existing PRL</li>
+                <li><b>EAPs</b></li>
+                <ul style="list-style-type: square;">
+                    <li>BCNC03</li>
+                    <li>BCNC11</li>
+                    <li>BCNC12</li>
+                    <li>BCNC14</li>
+                    <li>BCNC27</li>
+                    <li>BCNC28</li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.19: Concurrent Protocol Medicines [Default Category: See Details below] [Order Mode: Protocol dependent]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>Default Category OP: <b>Take-Home Medication</b></li>
+                <li>Default Category IP: <b>Supportive Care</b></li>
+                <li>Default Category IP (Haem): <b>USE HAEMATOLOGY SUPPORTIVE CARE BLOCK - IGNORE WHAT THE REQUESTER HAS REQUESTED, USE THE HAEM CARE BLOCK REGARDLESS EVEN IF MORE OR LESS DRUGS ARE REQUIRED. TELL THEM TO TALK TO ANISH IF THEY HAVE A PROBLEM</b></li>
+                <li>
+                    For inpatient & outpatient protocols most concurrent medicines should sit on day 1 of the protocol (with off-set times placed for drugs starting after day 1 and clear communication in patient instructions and note to pharmacy). This allows dispensing and preparation of drugs at the start of the protocol.
+                    <P>Exceptions may be applied for scenarios where the start of a particular supportive med is dependent on something that comes after day 1 of the protocol.</P>
+                </li>
+                <li>OSQ Naming convention: <b>&lt;Drug type&gt; TTA: &lt;Drug, dose, route, frequency&gt;</b></li>
+                <li>Drug type Order (loosely in order of importance):</li>
+                <ul style="list-style-type: square;">
+                    <li>Allopurinol</li>
+                    <li>Aciclovir</li>
+                    <li>Septrin</li>
+                    <li>Other regular meds, e.g., aspirin & lansoprazole (kept related meds together if possible)</li>
+                    <li>Anti-emetics (move higher for highly emetogenic regimes)</li>
+                    <li>PRN meds</li>
+                    <li>Hidden Background meds</li>
+                </ul>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                Section 4.20: Emergency Medications [Default Category: Emergency Medications] [Order Mode: Inpatient]
+                <span style="font-weight: bold; color: red; background-color: yellow;">[ONLY IF CONTAINS IV DRUGS]</span>
+                [OSQ: STEROIDS <button class="copy-btn" onclick="copyToClipboard('115000027')">115000027</button>]
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li>OSQ <button class="copy-btn" onclick="copyToClipboard('115000027')">115000027</button> - “EMERGENCY MEDS (STEROIDS)” for protocols that permit the use of steroids.</li>
+                <li>OSQ <button class="copy-btn" onclick="copyToClipboard('115000028')">115000028</button> - “EMERGENCY MEDS (OMIT-STEROIDS)” for protocols that prohibit the use of steroids.</li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>
+                <span style="font-weight: bold; color: red; background-color: yellow;">Complete Metadata</span>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+
+        <details>
+            <summary>
+                <span style="font-weight: bold; color: red; background-color: yellow;">Update tracker in POC:</span> <a href="https://nhs.sharepoint.com/:x:/s/msteams_6d051a/ESkQp-kqzm5Mqs0oi07iYAEBBpk5weorwg7Gp5myu1vOfw?e=thB0A1" target="_blank">Tracker</a>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+
+        <details>
+            <summary>
+                <span style="font-weight: bold; color: red; background-color: yellow;">Complete Branching in Delta Form</span>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+    </details>
+
+    <details>
+        <summary><b>Section 5: Releasing PRLs</b></summary>
+        <p>This section covers the steps to take to release PRLs</p>
+        <details>
+            <summary>
+                Step 1:For Trial protocols, only start the move to live if we have the following in an email:
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>has received Confirmation of Capacity and Capability at UCLH</b></li>
+                <li><b>Pharmacy & EHRS teams - please now move this study to 'live' on BEACON</b></li>
+            </ul>
+        </details>
+        <details>
+            <summary>
+                Step 2: Release Metadata
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+            <ul style="list-style-type: disc;">
+                <li><b>Ensure that ALL protocols have been validated by consultant BEFORE releasing any of them</b></li>
+                <li><b>Set Metadata as BCN - In Live System and release Metadata</b></li>
+            </ul>
+        </details>
+        <details>
+            <summary>
+                Step 3: Release all OSQs
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+        <details>
+            <summary>
+                Step 4: Release PRL
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+        <details>
+            <summary>
+                Step 5: Ensure that all necessary records are in ticket, especially if any OSQs have been modified.
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+        <details>
+            <summary>
+                Step 6: Move across necessary environments to Live
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+        <details>
+            <summary>
+                Step 7: Go into <b>the Study Maintenace Activity</b> and do the branching if trial protocol
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+        <details>
+            <summary>
+                Step 8: Email Requester
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+        <details>
+            <summary>
+                Step 9: Comment complete on CU task and close task
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details>
+<!--         <details>
+            <summary>
+                <span style="font-weight: bold; color: red; background-color: yellow;">Step 10: Update tracker in SUP:</span> <a href="https://nhs.sharepoint.com/:x:/s/msteams_6d051a/ETk3TFQAh5JDt8UNBtCsOo4BuSWxYcg-Q8vSImXhxxBVtQ?e=wmVFaA" target="_blank">Tracker</a>
+                <span class="buttons">
+                    <button class="button-icon green-tick" onclick="toggleSubsection('green', this)">✔</button>
+                    <button class="button-icon red-cross" onclick="toggleSubsection('red', this)">✘</button>
+                </span>
+            </summary>
+        </details> -->
+    </details>
+    <script>
+        const recordPageKey = "protocol_build_guide";
+        const pageRecordTypes = ["OSQ", "PRL", "LGL", "LQL", "CER"];
+    </script>
+
+    <script src="/epic-tools/assets/js/utils.js"></script>
+    <script src="/epic-tools/assets/js/record-ids.js"></script>
+
+    <script>
+        // Function to toggle background color of subsections
+        function toggleSubsection(status, element) {
+            // Get the parent summary element of the clicked button
+            const summary = element.closest('summary');
+            const subsection = summary.closest('details');
+
+            // Toggle the background color and expand/collapse subsection
+            if (status === 'green') {
+                if (summary.classList.contains('green-background')) {
+                    summary.classList.remove('green-background');
+                    subsection.open=true;
+                } else {
+                    summary.classList.add('green-background');
+                    summary.classList.remove('pink-background');
+                    subsection.open=false;
+                }
+            } else if (status === 'red') {
+                if (summary.classList.contains('pink-background')) {
+                    summary.classList.remove('pink-background');
+                    subsection.open=true;
+                } else {
+                    summary.classList.add('pink-background');
+                    summary.classList.remove('green-background');
+                    subsection.open=false;
+                }
+            }
+
+        }
+    </script>
+</body>
+</html>
+
