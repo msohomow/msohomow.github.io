@@ -6,7 +6,7 @@ const JSONBIN_BIN_ID = "69dceb31856a6821892bc2eb";
 
 async function loadRecordIds() {
     try {
-        const response = await fetch(`https://api.jsonbin.io/v3/xl/b/${JSONBIN_BIN_ID}`, {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Master-Key': JSONBIN_MASTER_KEY,
