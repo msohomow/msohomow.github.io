@@ -1,15 +1,24 @@
 
 let recordIds = {};
 
+const JSONBIN_URL = "https://api.jsonbin.io/v3/b/69dceb31856a6821892bc2eb";
+const JSONBIN_KEY = "$2a$10$hORAwDmKLYlTkmX63b1hxu6Yw2wlOyE8eVbn5xEDAlv7zk76EdkSS";
+
+const JSONBIN_MASTER_KEY = "$2a$10$hORAwDmKLYlTkmX63b1hxu6Yw2wlOyE8eVbn5xEDAlv7zk76EdkSS"";
+const JSONBIN_BIN_ID = "69dceb31856a6821892bc2eb";
+
 async function loadRecordIds() {
     try {
-        const response = await fetch('/epic-tools/api/record-ids');
-        const allIds = await response.json();
-
-        recordIds = allIds[recordPageKey] || {};
-
+        const response = await fetch(`https://api.jsonbin.io/v3/xl/b/${JSONBIN_BIN_ID}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_MASTER_KEY,
+                'X-Bin-Meta': 'false'
+            }
+        });
+        const data = await response.json();
+        recordIds = data[recordPageKey] || {};
         console.log("Loaded record IDs for page:", recordIds);
-
     } catch (error) {
         console.error("Failed to load record IDs:", error);
         recordIds = {};
@@ -18,19 +27,25 @@ async function loadRecordIds() {
 
 async function saveRecordIds() {
     try {
-        const response = await fetch('/epic-tools/api/record-ids');
+        const response = await fetch(`https://api.jsonbin.io/v3/xl/b/${JSONBIN_BIN_ID}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_MASTER_KEY,
+                'X-Bin-Meta': 'false'
+            }
+        });
         const allIds = await response.json();
 
         allIds[recordPageKey] = recordIds;
 
-        await fetch('/epic-tools/api/record-ids', {
-            method: 'POST',
+        await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_MASTER_KEY
             },
             body: JSON.stringify(allIds)
         });
-
         console.log("Record IDs saved");
     } catch (error) {
         console.error("Failed to save record IDs:", error);
