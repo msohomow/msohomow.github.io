@@ -24,7 +24,7 @@ async function loadRecordIds() {
 
 async function saveRecordIds() {
     try {
-        const response = await fetch(`https://api.jsonbin.io/v3/xl/b/${JSONBIN_BIN_ID}`, {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Master-Key': JSONBIN_MASTER_KEY,
