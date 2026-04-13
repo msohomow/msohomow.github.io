@@ -1,9 +1,6 @@
 
 let recordIds = {};
 
-const JSONBIN_URL = "https://api.jsonbin.io/v3/b/69dceb31856a6821892bc2eb";
-const JSONBIN_KEY = "$2a$10$hORAwDmKLYlTkmX63b1hxu6Yw2wlOyE8eVbn5xEDAlv7zk76EdkSS";
-
 const JSONBIN_MASTER_KEY = "$2a$10$hORAwDmKLYlTkmX63b1hxu6Yw2wlOyE8eVbn5xEDAlv7zk76EdkSS"";
 const JSONBIN_BIN_ID = "69dceb31856a6821892bc2eb";
 
